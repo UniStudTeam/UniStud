@@ -21,14 +21,14 @@ class MessageNotifications extends Component{
         //api call to fetch 7 most recent messages,
         //check every 5seconds for fresh messages
         this.setState({
-            messageNotificationArray: [ {status : "unseen", sender:"Kevin Foster", messageContent: "O plako ome ca bohet, si ke qene ti ca do bejm sot?", avatarSource: personAvatar}, 
-                                        {status : "unseen", sender:"Kevin Foster", messageContent: "O plako ome ca bohet, si ke qene ti ca do bejm sot?", avatarSource: personAvatar},
-                                        {status : "unseen", sender:"Kevin Foster", messageContent: "O plako ome ca bohet, si ke qene ti ca do bejm sot?", avatarSource: personAvatar},
-                                        {status : "unseen", sender:"Kevin Foster", messageContent: "O plako ome ca bohet, si ke qene ti ca do bejm sot?", avatarSource: personAvatar},
-                                        {status : "seen", sender:"Kevin Foster", messageContent: "O plako ome ca bohet, si ke qene ti ca do bejm sot?", avatarSource: personAvatar},
-                                        {status : "seen", sender:"Kevin Foster", messageContent: "O plako ome ca bohet, si ke qene ti ca do bejm sot?", avatarSource: personAvatar},
-                                        {status : "seen", sender:"Kevin Foster", messageContent: "O plako ome ca bohet, si ke qene ti ca do bejm sot?", avatarSource: personAvatar},
-                                        {status : "seen", sender:"Kevin Foster", messageContent: "O plako ome ca bohet, si ke qene ti ca do bejm sot?", avatarSource: personAvatar}
+            messageNotificationArray: [ {status : "unseen", sender:"Kevin Foster", messageContent: "Pershendetje. doja tju thoja dicka ne lidhje me punen.", avatarSource: personAvatar}, 
+                                        {status : "unseen", sender:"Kevin Foster", messageContent: "Pershendetje. doja tju thoja dicka ne lidhje me punen.", avatarSource: personAvatar},
+                                        {status : "unseen", sender:"Kevin Foster", messageContent: "Pershendetje. doja tju thoja dicka ne lidhje me punen.", avatarSource: personAvatar},
+                                        {status : "unseen", sender:"Kevin Foster", messageContent: "Pershendetje. doja tju thoja dicka ne lidhje me punen.", avatarSource: personAvatar},
+                                        {status : "seen", sender:"Kevin Foster", messageContent: "Pershendetje. doja tju thoja dicka ne lidhje me punen.", avatarSource: personAvatar},
+                                        {status : "seen", sender:"Kevin Foster", messageContent: "Pershendetje. doja tju thoja dicka ne lidhje me punen.", avatarSource: personAvatar},
+                                        {status : "seen", sender:"Kevin Foster", messageContent: "Pershendetje. doja tju thoja dicka ne lidhje me punen.", avatarSource: personAvatar},
+                                        {status : "seen", sender:"Kevin Foster", messageContent: "Pershendetje. doja tju thoja dicka ne lidhje me punen.", avatarSource: personAvatar}
                                         ]
         })
     }

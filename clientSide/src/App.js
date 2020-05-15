@@ -18,7 +18,7 @@ class App extends Component{
  
   render() {
     return (
-        <div className="container-fluid ">
+        <div className="container-fluid">
             <div className="row">
                 <div className="col-2 p-0 m-0 bgColor">
                   <br></br>
@@ -28,7 +28,6 @@ class App extends Component{
                   <br></br>
                   <MessageNotifications></MessageNotifications>
                 </div>
-
             </div>
         </div>
     );
