@@ -37,7 +37,7 @@ class MainMenu extends Component{
           <ListItem key={index} className="pl-4" button>
             <div className="row w-75 m-auto">
               <img className="mr-2" src={menuIcon} alt="Regjistri" />
-              <ListItemText style={{"fontSize": "1.7vw"}}  disableTypography >{menuName}</ListItemText>
+              <ListItemText style={{"fontSize": "1.2vw"}}  disableTypography >{menuName}</ListItemText>
             </div>
           </ListItem>
          )

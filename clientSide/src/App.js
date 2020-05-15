@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import LoggedInInfo from './components/SideComponent/LoggedInInfo';
 import MainMenu from './components/SideComponent/MainMenu';
+import MessageNotifications from './components/MessageNotifications';
 
 
 class App extends Component{
@@ -19,11 +20,13 @@ class App extends Component{
     return (
         <div className="container-fluid ">
             <div className="row">
-                <div className="col-3 p-0 m-0 bgColor">
+                <div className="col-2 p-0 m-0 bgColor">
                   <br></br>
                   <LoggedInInfo userType="Mesues" userName = "Skerd" userSurname = "Xhafa"></LoggedInInfo>
                   <br></br>
                   <MainMenu></MainMenu>
+                  <br></br>
+                  <MessageNotifications></MessageNotifications>
                 </div>
 
             </div>
