@@ -1,5 +1,7 @@
 
-import { GET_USERS, ADD_USER, DELETE_USER, USERS_LOADING } from '../actions/types';
+import { GET_USERS,  USERS_LOADING,
+    // ADD_USER, DELETE_USER, 
+} from '../actions/types';
 
 const initialState = {
     usersat:[],

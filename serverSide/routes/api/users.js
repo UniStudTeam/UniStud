@@ -1,5 +1,9 @@
 const express = require("express");
 const UserRouter = express.Router(); //this is the users router, inside this, there will be routes
+const bcrypt = require("bcryptjs");
+const config = require('config');
+const jwt = require('jsonwebtoken');
+
 
 //User Model, to make queries, we need it
 const User = require('../../models/User'); //this is the model
@@ -19,12 +23,54 @@ UserRouter.get('/', (request, response) => {
 //@access public( should be private )
 
 UserRouter.post('/', (request, response) => {
-    const newUser = new User({
-        name: request.body.name,
-        password: request.body.password
-    });
 
-    newUser.save().then( newUserSaved => response.json(newUserSaved) );
+    const{ name, password } = request.body;
+
+    if( !name || !password){
+        return response.status(400).json({msg: "Please enter all fields"});
+    }
+    
+    User.findOne({name}).then(
+        user => {
+            if( user ) response.status(400).json({msg: "User already exists"});
+
+            const newUser = new User({
+                name,
+                password
+            });
+
+            //Create Salt & Hash
+
+            bcrypt.genSalt(10, ( errror, salt ) =>{
+                bcrypt.hash(newUser.password, salt, (err, hash) =>{
+                    if( err ) throw err;
+                    newUser.password = hash;
+                    newUser.save().then( newUserSaved => {
+
+                        jwt.sign(
+                            { id: newUserSaved.id },
+                            config.get('jwtSecret'),
+                            {expiresIn: 3600 },
+                            (err, token) => {
+                                if(err) throw err;
+
+                                response.json({
+                                    token,
+                                    user:{
+                                        id: newUserSaved.id,
+                                        name: newUserSaved.name,
+                                    }
+                                })
+                            }
+                        )
+                    });
+                })
+            })
+
+        }
+    )
+
+    // newUser.save().then( newUserSaved => response.json(newUserSaved) );
 });
 
 //@UsersRoute Delete api/users/:userId

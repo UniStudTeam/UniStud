@@ -1,35 +1,44 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import LoggedInInfo from './components/SideComponent/LoggedInInfo';
-import MainMenu from './components/SideComponent/MainMenu';
-import MessageNotifications from './components/MessageNotifications';
+// import LoggedInInfo from './components/SideComponent/LoggedInInfo';
+// import MainMenu from './components/SideComponent/MainMenu';
+// import MessageNotifications from './components/MessageNotifications';
+import LoginPage from './components/LogIn/LoginPage';
+import ReduxStore from './ReduxStore';
+import {Provider} from 'react-redux';
 
+import {loadUser} from './actions/authActions';
 
 class App extends Component{
 
   constructor(props){
     super(props);
     this.state = {
-
     };
   }
 
+  componentDidMount(){
+    ReduxStore.dispatch(loadUser());
+  }
  
   render() {
     return (
-        <div className="container-fluid">
-            <div className="row">
-                <div className="col-2 p-0 m-0 bgColor">
-                  <br></br>
-                  <LoggedInInfo userType="Mesues" userName = "Skerd" userSurname = "Xhafa"></LoggedInInfo>
-                  <br></br>
-                  <MainMenu></MainMenu>
-                  <br></br>
-                  <MessageNotifications></MessageNotifications>
-                </div>
-            </div>
-        </div>
+      <Provider store={ReduxStore}>
+        <LoginPage></LoginPage>
+         {/* <div className="container-fluid">
+             <div className="row">
+                 <div className="col-2 p-0 m-0 bgColor">
+                   <br></br>
+                   <LoggedInInfo userType="Mesues" userName = "Skerd" userSurname = "Xhafa"></LoggedInInfo>
+                   <br></br>
+                   <MainMenu></MainMenu>
+                   <br></br>
+                   <MessageNotifications></MessageNotifications>
+                 </div>
+             </div>
+         </div> */}
+        </Provider>
     );
   }
 
