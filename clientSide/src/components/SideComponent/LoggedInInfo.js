@@ -15,10 +15,10 @@ const LoggedInInfo = (props) =>{
                     <div className="container-fluid align-items-center h-100 d-flex ">
                         <div className="row">
                             <div className="col-12 p-0">
-                                <h1 style={{"fontSize": "1.3vw"}}>{props.userName}</h1>
+                                <h5>{props.userName}</h5>
                             </div>
                             <div className="col-12 p-0">
-                                <h1 style={{"fontSize": "1.3vw"}}>{props.userSurname}</h1>
+                                <h5>{props.userSurname}</h5>
                             </div>
                         </div>
                     </div>

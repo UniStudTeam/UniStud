@@ -1,35 +1,59 @@
 import React, { Component } from 'react';
+import Sidebar from "react-sidebar";
+
+import SideComonent from './components/SideComponent';
+
+
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import LoggedInInfo from './components/SideComponent/LoggedInInfo';
-import MainMenu from './components/SideComponent/MainMenu';
-import MessageNotifications from './components/MessageNotifications';
 
+const mql = window.matchMedia(`(min-width: 950px)`);
 
 class App extends Component{
 
   constructor(props){
     super(props);
     this.state = {
-
+      sidebarDocked: mql.matches,
+      sidebarOpen: true
     };
+    this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
+    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
 
+  componentWillMount() {
+    mql.addListener(this.mediaQueryChanged);
+  }
+
+  componentWillUnmount() {
+    mql.removeListener(this.mediaQueryChanged);
+  }
+
+  onSetSidebarOpen(open) {
+    this.setState({ sidebarOpen: open });
+  }
+
+  mediaQueryChanged() {
+    this.setState({ sidebarDocked: mql.matches, sidebarOpen: false });
+  }
  
   render() {
     return (
-        <div className="container-fluid">
-            <div className="row">
-                <div className="col-2 p-0 m-0 bgColor">
-                  <br></br>
-                  <LoggedInInfo userType="Mesues" userName = "Skerd" userSurname = "Xhafa"></LoggedInInfo>
-                  <br></br>
-                  <MainMenu></MainMenu>
-                  <br></br>
-                  <MessageNotifications></MessageNotifications>
-                </div>
-            </div>
-        </div>
+      <Sidebar
+        sidebar={
+          <SideComonent></SideComonent>
+        }
+        open={this.state.sidebarOpen}
+        onSetOpen={this.onSetSidebarOpen}
+        docked={this.state.sidebarDocked}
+        onSetOpen={this.onSetSidebarOpen}
+        styles={{ sidebar: { background: "white", padding: 0 } }}
+      >
+        <button onClick={() => this.onSetSidebarOpen(true)}>
+          Open sidebar
+        </button>
+      </Sidebar>
     );
   }
 
