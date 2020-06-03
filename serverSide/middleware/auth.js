@@ -1,6 +1,10 @@
 const config = require('config');
 const jwt = require('jsonwebtoken');
 
+const noAuthTitle = "Autorizimi gabim";
+const noAuthBody = "Autorizimi nuk u krye me sukses. Mungon token-i unik.";
+
+
 //the aim of a middleware is to get request, do whatever,
 //return a response and then go next
 function auth(request, response, next){
@@ -8,7 +12,7 @@ function auth(request, response, next){
 
     //check for token
 
-    if( !token ) return response.status(401).json({msg: "User is not authorized, no token"});
+    if( !token ) return response.status(401).json({title: noAuthTitle, body: noAuthBody});
 
     try{
         //Verify token

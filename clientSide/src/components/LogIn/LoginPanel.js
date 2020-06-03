@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect } from 'react-redux';
 import {Spinner, Button, Label, Input, InputGroup, Form, Container } from 'reactstrap';
-import {loginUser} from '../../actions/authActions';
+import {loginUser, loadUser} from '../../actions/authActions';
 import {clearErrors} from '../../actions/errorActions';
 import PropTypes from 'prop-types';
 import ForgetCredentials from './ForgetCredentials';
@@ -26,26 +26,18 @@ class LoginPanel extends Component{
         this.setState({ [e.target.name] : e.target.value });
     }
 
-    componentDidMount(){
-        console.log("LoginPanel mounted");     
-        const {email, password} = this.state;
-        const user = {
-            name : email,
-            password
-        }
-        this.props.loginUser(user);
+    componentWillMount(){
+        this.props.loadUser();
     }
-
+    
     tryToLogIn(e) {
         e.preventDefault();
 
         console.log('Trying to log in now...');
-        const {email, password} = this.state;
-        const user = {
-            name : email,
-            password
-        }
-        this.props.loginUser(user);
+        this.props.loginUser({
+            name : this.state.email,
+            password: this.state.password
+        });
     }
 
     togglePassword(e){
@@ -67,9 +59,9 @@ class LoginPanel extends Component{
         // console.log("LoginPanel updated");
         if( this.props.isAuthenticated){
             console.log("LOGIN SUCCESSFULL");
-            if( this.props.error.msg ){
-                this.props.clearErrors();
-            }
+            // if( this.props.error.title ){
+            //     this.props.clearErrors();
+            // }
             window.location = "/home";
         }
     }
@@ -89,6 +81,7 @@ class LoginPanel extends Component{
                         onChange={this.handleInputChange}
                         required
                         />
+
                     <br/>
                     
                     <Label>Fjalëkalimi</Label>
@@ -117,7 +110,6 @@ class LoginPanel extends Component{
                         </Button>
 
                         <ForgetCredentials></ForgetCredentials>
-                        
                     </div>
                 </Form>
 
@@ -145,4 +137,4 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect( mapStateToProps, { loginUser, clearErrors } )(LoginPanel);
+export default connect( mapStateToProps, { loginUser, clearErrors, loadUser } )(LoginPanel);

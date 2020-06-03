@@ -8,6 +8,12 @@ const jwt = require('jsonwebtoken');
 //User Model, to make queries, we need it
 const User = require('../../models/User'); //this is the model
 
+const emptyInputTitle = "Te dhenat nuk duhet te jene bosh";
+const emptyInputBody = "Nje ose me shume te dhena jane bosh. Ju Lutem plotesoni fushat e kerkuara.";
+
+const userExistsTitle = "Perdoruesi ekziston";
+const userExistsBody = "Nje perdorues me keto the dhena eshte i regjistruar me pare.";
+
 //@UsersRoute Get api/users
 //@desc get all users here
 //@access public( should be private )
@@ -27,12 +33,12 @@ UserRouter.post('/', (request, response) => {
     const{ name, password } = request.body;
 
     if( !name || !password){
-        return response.status(400).json({msg: "Please enter all fields"});
+        return response.status(400).json({title: emptyInputTitle, body: emptyInputBody});
     }
     
     User.findOne({name}).then(
         user => {
-            if( user ) response.status(400).json({msg: "User already exists"});
+            if( user ) response.status(400).json({title: userExistsTitle, body: userExistsBody});
 
             const newUser = new User({
                 name,

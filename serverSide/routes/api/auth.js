@@ -9,6 +9,11 @@ const auth = require('../../middleware/auth'); //used to constantly verify looge
 //User Model, to make queries, we need it
 const User = require('../../models/User'); //this is the model
 
+const emptyInputTitle = "Te dhenat nuk duhet te jene bosh";
+const emptyInputBody = "Nje ose me shume te dhena jane bosh. Ju Lutem plotesoni fushat e kerkuara.";
+
+const invalidCredentialsTitle = "Kredenciale te pavlefshme";
+const invalidCredentialsBody = "Keto kredenciale jane te pavlefshme, ju lutem provoni perseri.";
 
 //@UsersRoute Post api/auth
 //@desc Auth user
@@ -19,18 +24,18 @@ AuthRouter.post('/', (request, response) => {
     const{ name, password } = request.body;
 
     if( !name || !password){
-        return response.status(400).json({msg: "Please enter all fields"});
+        return response.status(400).json({title: emptyInputTitle, body: emptyInputBody});
     }
     
     User.findOne({name}).then(
         user => {
-            if( !user ) response.status(400).json({msg: "Invalid credentials"});
+            if( !user ) return response.status(400).json({title: invalidCredentialsTitle, body: invalidCredentialsBody});
 
             //Validate password
 
             bcrypt.compare(password, user.password)
                 .then(isMatch => {
-                    if(!isMatch)    return response.status(400).json({msg: "Invalid credentials"});
+                    if(!isMatch)  return response.status(400).json({title: invalidCredentialsTitle , body: invalidCredentialsBody});
 
                     jwt.sign(
                         { id: user.id },
@@ -50,8 +55,6 @@ AuthRouter.post('/', (request, response) => {
                 })
         }
     )
-
-    // newUser.save().then( newUserSaved => response.json(newUserSaved) );
 });
 
 //@UsersRoute Get api/auth/user

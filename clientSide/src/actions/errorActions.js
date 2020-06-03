@@ -2,10 +2,14 @@ import { GET_ERRORS, CLEAR_ERRORS } from './types';
 
 // RETURN ERRORS
 
-export const returnErrors = (msg, status, id=null) => {
+export const returnErrors = (title, body, status, id=null) => {
+    console.log(title);
+    console.log(body);
+    console.log(status);
+    console.log(id);
     return{
         type: GET_ERRORS, //call error and put everything below into state
-        payload: {msg, status, id}
+        payload: {title, body, status, id}
     }
 }
 

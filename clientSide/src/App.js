@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import LoginPage            from './components/LogIn/LoginPage';
+import MainPage             from './components/MainPage/index';
+import ReduxStore           from './ReduxStore';
+import {Provider}           from 'react-redux';
+
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import LoginPage from './components/LogIn/LoginPage';
-// import MainPage from './components/MainPage/index';
-
-import ReduxStore from './ReduxStore';
-import {Provider} from 'react-redux';
 
 import {
   BrowserRouter as Router,
@@ -22,40 +23,16 @@ class App extends Component{
     };
   }
 
-  componentDidMount(){
-  }
-
-  componentDidUpdate(){
-    console.log("App.js updated");
-  }
- 
   render() {
     return (
       <Provider store={ReduxStore}>
-          <Router>
-            <Switch>
+        <Router>
+          <Switch>
             <Route exact path="/login" component={LoginPage} />
-            <Route path="/home" component={LoginPage} />
-            {/* <Route path="/smile" component={SmileLady} />
-            <Route path="/think" component={ThinkHard} />
-            <Route path="/thumbs" component={ThumbsUp} />
-            <Route path="/excited" component={BeExcited} /> */}
-            </Switch>
+            <Route path="/home" component={MainPage} />
+          </Switch>
         </Router>
-        {/* <LoginPage></LoginPage> */}
-        {/* <div className="container-fluid">
-             <div className="row">
-                 <div className="col-2 p-0 m-0 bgColor">
-                   <br></br>
-                   <LoggedInInfo userType="Mesues" userName = "Skerd" userSurname = "Xhafa"></LoggedInInfo>
-                   <br></br>
-                   <MainMenu></MainMenu>
-                   <br></br>
-                   <MessageNotifications></MessageNotifications>
-                 </div>
-             </div>
-         </div> */}
-        </Provider>
+      </Provider>
     );
   }
 

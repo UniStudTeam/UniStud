@@ -7,9 +7,9 @@ import {
     AUTH_ERROR,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
+    LOGOUT_SUCCESS,
     // LOGIN_SUCCESS,
     // LOGIN_FAIL,
-    // LOGOUT_SUCCESS,
     // REGISTER_SUCCESS,
     // REGISTER_FAIL
 }
@@ -32,7 +32,9 @@ export const loadUser = () => (dispatch, getState) => {
             });
         })
         .catch(error => {
-            dispatch(returnErrors(error.response.data, error.response.status));
+
+            dispatch(returnErrors(error.response.data.title, error.response.data.body, error.response.status));
+
             dispatch({
                 type: AUTH_ERROR
             })
@@ -52,10 +54,7 @@ export const loginUser = (user) => (dispatch, getState) => {
             'Content-Type' : 'application/json'
         }
     }
-
     const body = JSON.stringify(user);
-
-    console.log("Ready to make /api/auth call to login user");
 
     axios
         .post('/api/auth', body, config)
@@ -66,11 +65,31 @@ export const loginUser = (user) => (dispatch, getState) => {
             });
         })
         .catch(error => {
-            dispatch(returnErrors(error.response.data, error.response.status));
+
+            dispatch( //returnErrors(title, body, statys, id(optional)) return a format of: {type:___, payLoad: ___}
+                returnErrors(
+                    error.response.data.title, 
+                    error.response.data.body, 
+                    error.response.status
+                )
+            );
+
             dispatch({
                 type: LOGIN_FAIL, 
             });
         })
+}
+
+
+export const logoutUser = () => (dispatch) => {
+
+    //we need to make token not valid too !!!!!importatnt
+    dispatch({
+        type: LOGOUT_SUCCESS
+    }).then(response => {
+        window.location = "/login";
+    });
+
 }
 
 //Setup Config/Headers and token
