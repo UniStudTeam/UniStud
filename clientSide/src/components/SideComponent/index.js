@@ -1,34 +1,27 @@
 import React from 'react';
 import {Container} from 'reactstrap';
+import "./sidePanel.css";
 
-import LoggedInInfo from './LoggedInInfo';
-import MainMenu from './MainMenu';
-import MessageNotifications from '../MessageNotifications';
 
+import EmerMbiemer from './EmerMbiemer';
+import SideMenu from './SideMenu';
+import AllActivities from './Aktivitetet/AllActivities';
 
 
 const SidePanelParent = (props) => {
 
     return(
-        <Container fluid={true} style={styles.sideBar}>
-            <br></br>
-                <LoggedInInfo userType="Mesues" userName = "Skerd" userSurname = "Xhafa"></LoggedInInfo>
+        <div className="pt-5 pl-3 pr-3 borderParentComponent" style={{width: " 350px"}}>
+            <Container >
+                <EmerMbiemer userName="Skerd" userSurname="Xhafa" userType="Mesues"></EmerMbiemer>
                 <br></br>
-                <MainMenu></MainMenu>
+                <SideMenu></SideMenu>
                 <br></br>
-                <MessageNotifications></MessageNotifications>
-        </Container>
-
+                <AllActivities></AllActivities>
+            </Container>
+        </div>
     )
 
 }
-
-const styles = {
-    sideBar: {
-        maxWidth: 280,
-        padding: 0,
-        backgroundColor: 'white',
-    }
-  };
 
 export default SidePanelParent;

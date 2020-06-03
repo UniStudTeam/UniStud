@@ -27,7 +27,8 @@ class MessageNotifications extends Component{
                                         {status : "unseen", sender:"Kevin Foster", messageContent: "Pershendetje. doja tju thoja dicka ne lidhje me punen.", avatarSource: personAvatar},
                                         {status : "seen", sender:"Kevin Foster", messageContent: "Pershendetje. doja tju thoja dicka ne lidhje me punen.", avatarSource: personAvatar},
                                         {status : "seen", sender:"Kevin Foster", messageContent: "Pershendetje. doja tju thoja dicka ne lidhje me punen.", avatarSource: personAvatar},
-
+                                        {status : "seen", sender:"Kevin Foster", messageContent: "Pershendetje. doja tju thoja dicka ne lidhje me punen.", avatarSource: personAvatar},
+                                        {status : "seen", sender:"Kevin Foster", messageContent: "Pershendetje. doja tju thoja dicka ne lidhje me punen.", avatarSource: personAvatar}
                                         ]
         })
     }
@@ -35,39 +36,35 @@ class MessageNotifications extends Component{
     renderMessage(){
         return this.state.messageNotificationArray.map((message, index) => {
             const { status, sender, messageContent, avatarSource } = message //destructuring
+            var seenOrNot = "";
             var newMsgIcon;
             if( status == "unseen"){
-                newMsgIcon = React.createElement('img', { className: ' mt-auto mb-auto' , src: newMessage, style: {"width":"12px", "height":"12px"} });
-            }else{
-                newMsgIcon = React.createElement('img', { className: ' mt-auto mb-auto' ,  style: {"width":"12px", "height":"12px"} });
+                console.log("asdasdasda");
+                newMsgIcon = React.createElement('img', { className: 'w-100 mt-auto mb-auto' , src: newMessage});
+                seenOrNot = '<img className="w-100 rounded-circle" src={' + newMessage + '} alt="Person Avatar" />';
             }
             return (
                 <ListItem key={index} className="p-0 m-0 mb-2" button>
-                    <div className="row w-100 p-0 m-0">
-
-                        <div className="container-fluid align-items-center h-100 d-flex p-0 m-0 ">
-                            <div className="row w-100 p-0 m-0">
-                                
-                                <div className="" >
+                    <div className="row w-100 pl-4 m-0">
+                        <div className="col-1 p-0 m-0">
+                            <div className="container-fluid align-items-center h-100 d-flex p-0 m-0">
+                                <div className="row w-100 p-0 m-0">
                                     {newMsgIcon}
                                 </div>
-                                
-                                <div className="" style={{"width":"28px", "height":"28px"}}>
-                                    <img className="w-100 rounded-circle mt-auto mb-auto" src={avatarSource} alt="Person Avatar" />
-                                </div>
-
-                                <div className="">
-                                    <div className=" " style={{"fontSize": "14px"}}>
-                                        <strong>{sender}</strong>
-                                    </div>
-                                    <div className="" style={{"fontSize": "14px"}}>
-                                        {messageContent.slice(0,35) + "..."}
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
-                 
+                        <div className="col-3 p-0 m-0 " > 
+                            <img className="w-100 rounded-circle" src={avatarSource} alt="Person Avatar" />
+                        </div>
+                        <div className="col-7 p-0 m-0" > 
+                            <div className="row p-0 m-0">
+                                <strong>{sender}</strong>
+                            </div>
+                            <div style={{"fontSize": "1.0vw"}} className="row p-0 m-0"> 
+                                {messageContent.slice(0,30) + "..."}
+                            </div>
+                        </div>
+                    
                     </div>
                 </ListItem>
             )
@@ -78,15 +75,15 @@ class MessageNotifications extends Component{
     render() {
       return (
             <div className="container-fluid p-0 m-0 border border-warning" >
-                <div className="row ml-4 p-0 m-0">
-                    <div className="col-11 offset-1 m-0 p-0">
-                        <h5>Mesazhe</h5>
-                    </div>
+                <div className="row ml-4 ">
+                    <h5>Mesazhe</h5>
                 </div>
-                <div className="row w-100 m-0 p-0 pl-3">
-                    <List className="w-100 menuItem" disablePadding dense>
-                        {this.renderMessage()}
-                    </List>
+                <div className="row w-100 m-0" style={{"max-height": "430px", "overflow" : "auto", "overflow-x": "hidden" }}>
+                    <div className="col-12 p-0" style={{"max-height": "550px !important", "overflow" : "auto !important", "overflow-x": "hidden !important" }}>
+                        <List className="w-100 menuItem" disablePadding dense>
+                            {this.renderMessage()}
+                        </List>
+                    </div>
                 </div>
             </div>
       );

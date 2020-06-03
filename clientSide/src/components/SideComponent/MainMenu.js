@@ -37,9 +37,7 @@ class MainMenu extends Component{
           <ListItem key={index} className="pl-4" button>
             <div className="row w-75 m-auto">
               <img className="mr-2" src={menuIcon} alt="Regjistri" />
-              <ListItemText disableTypography >
-                <h5>{menuName}</h5>  
-              </ListItemText>
+              <ListItemText style={{"fontSize": "1.2vw"}}  disableTypography >{menuName}</ListItemText>
             </div>
           </ListItem>
          )
@@ -47,17 +45,19 @@ class MainMenu extends Component{
    }
 
     render() {
+
+      
+
+
       return ( 
 
         <div className="container-fluid p-0 m-0 border border-warning">
-            <div className="row p-0 m-0 pl-4">
-                <div className="col-11 offset-1 m-0 p-0">
-                  <h5>Menu</h5>
-                </div>
+            <div className="row ml-4 ">
+                <h5>Menu</h5>
             </div>
             <div className="row w-100 m-0">
               <div className="col-12 p-0">
-                <List className=" menuItem" disablePadding dense>
+                <List className="w-100 menuItem" disablePadding dense>
 
                   {this.renderMenuItem()}
                   
