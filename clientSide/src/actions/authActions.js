@@ -5,6 +5,8 @@ import {
     USER_LOADED,
     USER_LOADING,
     AUTH_ERROR,
+    LOGIN_SUCCESS,
+    LOGIN_FAIL,
     // LOGIN_SUCCESS,
     // LOGIN_FAIL,
     // LOGOUT_SUCCESS,
@@ -34,6 +36,40 @@ export const loadUser = () => (dispatch, getState) => {
             dispatch({
                 type: AUTH_ERROR
             })
+        })
+}
+
+//Login User Now
+
+export const loginUser = (user) => (dispatch, getState) => {
+
+    dispatch({
+        type: USER_LOADING
+    });
+
+    const config = {
+        headers: {
+            'Content-Type' : 'application/json'
+        }
+    }
+
+    const body = JSON.stringify(user);
+
+    console.log("Ready to make /api/auth call to login user");
+
+    axios
+        .post('/api/auth', body, config)
+        .then(response => {
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: response.data
+            });
+        })
+        .catch(error => {
+            dispatch(returnErrors(error.response.data, error.response.status));
+            dispatch({
+                type: LOGIN_FAIL, 
+            });
         })
 }
 

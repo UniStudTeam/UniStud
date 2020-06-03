@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-// import LoggedInInfo from './components/SideComponent/LoggedInInfo';
-// import MainMenu from './components/SideComponent/MainMenu';
-// import MessageNotifications from './components/MessageNotifications';
 import LoginPage from './components/LogIn/LoginPage';
+// import MainPage from './components/MainPage/index';
+
 import ReduxStore from './ReduxStore';
 import {Provider} from 'react-redux';
 
-import {loadUser} from './actions/authActions';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+
 
 class App extends Component{
 
@@ -19,14 +23,27 @@ class App extends Component{
   }
 
   componentDidMount(){
-    ReduxStore.dispatch(loadUser());
+  }
+
+  componentDidUpdate(){
+    console.log("App.js updated");
   }
  
   render() {
     return (
       <Provider store={ReduxStore}>
-        <LoginPage></LoginPage>
-         {/* <div className="container-fluid">
+          <Router>
+            <Switch>
+            <Route exact path="/login" component={LoginPage} />
+            <Route path="/home" component={LoginPage} />
+            {/* <Route path="/smile" component={SmileLady} />
+            <Route path="/think" component={ThinkHard} />
+            <Route path="/thumbs" component={ThumbsUp} />
+            <Route path="/excited" component={BeExcited} /> */}
+            </Switch>
+        </Router>
+        {/* <LoginPage></LoginPage> */}
+        {/* <div className="container-fluid">
              <div className="row">
                  <div className="col-2 p-0 m-0 bgColor">
                    <br></br>

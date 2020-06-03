@@ -1,29 +1,31 @@
 
 import React from 'react';
+import {
+    Button,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    Label,
+  } from 'reactstrap';
 
-
-const Modal = ({ handleClose, show, modalInfo}) => {
+const WarningModal = ({ handleClose, show, modalInfo}) => {
 
     return (
-        <div className={show ? "modal d-block" : "modal d-none"}>
-            <div className="modal-dialog shadow z-depth-1" role="document">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 id="modalTitle" className="modal-title text-danger">{modalInfo.title}</h5>
-                        <button type="button" className="close" onClick={handleClose} aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div id="modalBody" className="modal-body">
-                        <p>{modalInfo.body}</p>
-                    </div>
-                    <div className="modal-footer text-center">
-                        <button type="button" className="btn btn-success m-auto" onClick={handleClose}>Ok</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <Modal isOpen={show} toggle={handleClose}>
+            <ModalHeader className="text-danger" toggle={handleClose}>
+                {modalInfo.title}
+            </ModalHeader>
+            <ModalBody>
+                <Label>{modalInfo.body}</Label>
+            </ModalBody>
+            <ModalFooter className="justify-content-center">
+                <Button outline color="success" onClick={handleClose} >
+                    Ok
+                </Button>
+            </ModalFooter>
+        </Modal>
     );
   };
 
-  export default Modal;
+  export default WarningModal;

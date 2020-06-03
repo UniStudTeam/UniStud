@@ -1,154 +1,148 @@
 import React, {Component} from 'react';
-
 import {connect } from 'react-redux';
-import {tryToLogInUser} from '../../actions/loginAction';
+import {Spinner, Button, Label, Input, InputGroup, Form, Container } from 'reactstrap';
+import {loginUser} from '../../actions/authActions';
+import {clearErrors} from '../../actions/errorActions';
 import PropTypes from 'prop-types';
+import ForgetCredentials from './ForgetCredentials';
 
-import Modal from "../Modals/Modal";
 
 class LoginPanel extends Component{
 
     constructor(props){
         super(props);
         this.state = {
-          spinning: "invisible",
-          notSpinning: "visible",
-          showModal : false,
-          modalInfo : {
-              title: "",
-              body: ""
-          },
-          passwordType : "password",
-          passwordButton : "btn btn-outline-warning",
-
+            passwordType : "password",
+            passwordButton : "warning",
+            password: null,
+            email: null,
         };
         this.tryToLogIn = this.tryToLogIn.bind(this);
-        this.toggleSpin = this.toggleSpin.bind(this);
-        this.toggleModal = this.toggleModal.bind(this);
-        this.editModal = this.editModal.bind(this);
         this.togglePassword = this.togglePassword.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+    }
+
+    handleInputChange(e){
+        this.setState({ [e.target.name] : e.target.value });
     }
 
     componentDidMount(){
         console.log("LoginPanel mounted");     
-    }
-
-    toggleModal(){
-        this.setState({showModal: !this.state.showModal});
-    }
-
-    editModal(e){
-        var whatModal = e.target.id;
-
-        if( whatModal === "resetPassword"){
-            this.setState({modalInfo:{ title: "Keni harruar fjalekalimin?", body: "Ju lutem kontaktoni sekretarine e institucionit ne te cilin punoni. Faleminderit."}})
+        const {email, password} = this.state;
+        const user = {
+            name : email,
+            password
         }
-        else if( whatModal === "resetEmail"){
-            this.setState({modalInfo:{ title: "Keni harruar email-in?", body: "Ju lutem kontaktoni sekretarine e institucionit ne te cilin punoni. Faleminderit."}})
-        }
-        this.toggleModal();
-    }
-
-    toggleSpin(){
-        console.log("Starting Spin");
-
-        if( this.state.spinning === "invisible"){
-            this.setState({spinning : "visible"});
-            this.setState({notSpinning : "invisible"});
-        }
-        else{
-            this.setState({spinning : "invisible"});
-            this.setState({notSpinning : "visible"});
-        }
+        this.props.loginUser(user);
     }
 
     tryToLogIn(e) {
         e.preventDefault();
-        console.log('Trying to log in now...');
-        this.toggleSpin();
 
-        this.props.tryToLogInUser();
-        
+        console.log('Trying to log in now...');
+        const {email, password} = this.state;
+        const user = {
+            name : email,
+            password
+        }
+        this.props.loginUser(user);
     }
 
     togglePassword(e){
 
         if( this.state.passwordType === "password"){
             this.setState({passwordType : "text"});
-            this.setState({passwordButton : "btn btn-outline-success"});
+            this.setState({passwordButton : "success"});
             e.target.innerText = "Fshihe";
         }
         else{
             this.setState({passwordType : "password"});
-            this.setState({passwordButton : "btn btn-outline-warning"});
+            this.setState({passwordButton : "warning"});
             e.target.innerText = "Shiko";
         }
 
     }
 
+    componentDidUpdate(){
+        // console.log("LoginPanel updated");
+        if( this.props.isAuthenticated){
+            console.log("LOGIN SUCCESSFULL");
+            if( this.props.error.msg ){
+                this.props.clearErrors();
+            }
+            window.location = "/home";
+        }
+    }
 
     render(){
         return (
-            <div className="container-fluid mt-5" >
+            <Container className="mt-5">
 
-                <form onSubmit={this.tryToLogIn}>
-                    <label >Adresa E-mail</label>
-                    <input type="text" className="form-control" name="loginEmail" placeholder="Vendosni email-in" required />
-                
+                {/* {this.props.error.msg ? <Alert color="danger">{this.props.error.msg}</Alert> : null} */}
+                <Form onSubmit={this.tryToLogIn}>
+                    <Label >Adresa E-mail</Label>
+                    <Input 
+                        type="text" 
+                        id="email" 
+                        name="email" 
+                        placeholder="Vendosni email-in"  
+                        onChange={this.handleInputChange}
+                        required
+                        />
                     <br/>
-                    <div> {this.state.loginResponse} </div>
-
-                    <label>Fjalëkalimi</label>
-                    <div className="input-group">
-                        <input type={this.state.passwordType} className="form-control" name="loginPassword" placeholder="Vendosni fjalëkalimin" required/>
-                        <button id="showHideButton" value="show" type="button" className={this.state.passwordButton} onClick={this.togglePassword}>
+                    
+                    <Label>Fjalëkalimi</Label>
+                    <InputGroup>
+                        <Input 
+                            type={this.state.passwordType} 
+                            id="password" 
+                            name="password" 
+                            placeholder="Vendosni fjalëkalimin" 
+                            onChange={this.handleInputChange}
+                            required
+                            />
+                        <Button value="show" outline color={this.state.passwordButton} onClick={this.togglePassword}>
                             Shiko
-                        </button>     
-                    </div>
+                        </Button>     
+                    </InputGroup>
 
                     <br/>
                    
-
                     <div className="text-center">
-                        <div>
-                            <div id="spinnerDiv" className={this.state.spinning} style={{"height": "0px"}}>
-                                <div className="spinner-border text-success m-auto" onClick={this.toggleSpin}></div>
-                            </div>
-                            <button type="submit" value="Submit" className={"btn btn-outline-success m-auto " + this.state.notSpinning}>
-                                Kycuni
-                            </button>
+                        <div style={{"height": "0px"}}>
+                            <Spinner className={!this.props.isLoading ? "invisible": null } color="success" />
                         </div>
-                        <div>
-                            <a href="#" className="form-text text-muted">
-                                <small id="resetPassword" onClick={this.editModal}>Keni harruar fjalëkalimin?</small>
-                            </a>
-                            <a href="#" className="form-text text-muted">
-                                <small id="resetEmail" onClick={this.editModal}>Keni harruar email-in?</small>
-                            </a>
-                        </div>
+                        <Button type="submit" className={this.props.isLoading ? "invisible": null } outline color="success" >
+                            Kyçuni
+                        </Button>
+
+                        <ForgetCredentials></ForgetCredentials>
+                        
                     </div>
+                </Form>
 
-                </form>
-
-                <Modal show={this.state.showModal} handleClose={this.toggleModal} modalInfo={this.state.modalInfo} ></Modal>
-            </div>
+            </Container>
         )
     }
-    
-
 }
 
 
 LoginPanel.propTypes = {
-    tryToLogInUser: PropTypes.func.isRequired,
-    loginResponse: PropTypes.object
+    loginUser: PropTypes.func,
+    clearErrors: PropTypes.func,
+    isAuthenticated: PropTypes.bool,
+    error: PropTypes.object,
+    isLoading: PropTypes.bool
 }
 
 const mapStateToProps = (state) => ({
     //state "reducer name from main reducer"
-    loginResponse: state.logIn //we map a reducer to a state property
+    //we map a reducer to a state property
+    loginResponse: state.logIn, 
+    isAuthenticated : state.auth.isAuthenticated,
+    isLoading: state.auth.isLoading,
+    error: state.error.msg
 });
 
 
-export default connect( mapStateToProps, { tryToLogInUser } )(LoginPanel);
-            //    connect( mapStateToProps, { tryToLogInUser } )(LoginPanel)
+export default connect( mapStateToProps, { loginUser, clearErrors } )(LoginPanel);
