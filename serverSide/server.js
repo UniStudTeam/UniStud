@@ -1,8 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
-const UsersApi = require("./routes/api/users");
+const config = require('config');
 
 const app = express();
 
@@ -10,7 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // Db Configuration
-const db = require("./config/keys").mongoURI;
+const db = config.get('mongoURI');
 
 //Connect to Mongo DB
 mongoose.connect(db)
@@ -18,7 +17,9 @@ mongoose.connect(db)
         .catch( err => console.log(err));
 
 //Use Routes
-app.use('/api/users', UsersApi);
+app.use('/api/users', require("./routes/api/users"));
+app.use('/api/auth', require("./routes/api/auth"));
+
 
 const port = process.env.PORT || 5000;
 
