@@ -1,14 +1,11 @@
 //To bring together all other reducers
 
 import {combineReducers} from 'redux';
-import errorReducer from './errorReducer';
-import authReducer from './authReducer';
-
+import userReducer from './userReducer';
 
 
 export default combineReducers({ //as many as we want inside this
-    error: errorReducer,
-    auth: authReducer
+    users: userReducer
 });
 
 

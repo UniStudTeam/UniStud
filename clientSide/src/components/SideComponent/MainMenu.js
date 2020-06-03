@@ -1,5 +1,6 @@
 import React from 'react';
 import {Component} from 'react';
+import {Row, Container} from 'reactstrap';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -18,9 +19,6 @@ class MainMenu extends Component{
 
     constructor(props){
       super(props);
-      this.state={
-        
-      }
     }
 
     renderMenuItem() {
