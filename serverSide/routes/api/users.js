@@ -1,9 +1,5 @@
 const express = require("express");
 const UserRouter = express.Router(); //this is the users router, inside this, there will be routes
-const bcrypt = require("bcryptjs");
-const config = require('config');
-const jwt = require('jsonwebtoken');
-
 
 //User Model, to make queries, we need it
 const User = require('../../models/User'); //this is the model
@@ -29,6 +25,10 @@ UserRouter.get('/', (request, response) => {
 //@access public( should be private )
 
 UserRouter.post('/', (request, response) => {
+    const newUser = new User({
+        name: request.body.name,
+        password: request.body.password
+    });
 
     const{ name, password } = request.body;
 
