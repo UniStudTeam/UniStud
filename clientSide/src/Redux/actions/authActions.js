@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {returnErrors} from './errorActions';
+import {redirectUserTo} from '../actions/redirectActions'
 
 import {
     USER_LOADED,
@@ -8,6 +9,7 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
+    REDIRECT_LOGIN,
     // LOGIN_SUCCESS,
     // LOGIN_FAIL,
     // REGISTER_SUCCESS,
@@ -21,6 +23,7 @@ from './types';
 
 export const loadUser = () => (dispatch, getState) => {
 
+    console.log("Loading User");
     //User Loading
     dispatch({type: USER_LOADING}); //tell authReducer to use User_Loading
 
@@ -30,14 +33,18 @@ export const loadUser = () => (dispatch, getState) => {
                 type: USER_LOADED,
                 payload: response.data
             });
+            console.log("User is loaded successfully");
         })
         .catch(error => {
+
+            redirectUserTo("login");
 
             dispatch(returnErrors(error.response.data.title, error.response.data.body, error.response.status));
 
             dispatch({
                 type: AUTH_ERROR
-            })
+            });
+
         })
 }
 
@@ -63,6 +70,7 @@ export const loginUser = (user) => (dispatch, getState) => {
                 type: LOGIN_SUCCESS,
                 payload: response.data
             });
+            console.log("User logged in successfully");
         })
         .catch(error => {
 

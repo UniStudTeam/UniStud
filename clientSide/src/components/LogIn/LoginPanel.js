@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {connect } from 'react-redux';
 import {Spinner, Button, Label, Input, InputGroup, Form, Container } from 'reactstrap';
-import {loginUser, loadUser} from '../../actions/authActions';
-import {clearErrors} from '../../actions/errorActions';
+import {loginUser, loadUser} from '../../Redux/actions/authActions';
+import {clearErrors} from '../../Redux/actions/errorActions';
 import PropTypes from 'prop-types';
+import {connect } from 'react-redux';
 import ForgetCredentials from './ForgetCredentials';
 
 
@@ -24,10 +24,6 @@ class LoginPanel extends Component{
 
     handleInputChange(e){
         this.setState({ [e.target.name] : e.target.value });
-    }
-
-    componentWillMount(){
-        this.props.loadUser();
     }
     
     tryToLogIn(e) {
@@ -53,17 +49,6 @@ class LoginPanel extends Component{
             e.target.innerText = "Shiko";
         }
 
-    }
-
-    componentDidUpdate(){
-        // console.log("LoginPanel updated");
-        if( this.props.isAuthenticated){
-            console.log("LOGIN SUCCESSFULL");
-            // if( this.props.error.title ){
-            //     this.props.clearErrors();
-            // }
-            window.location = "/home";
-        }
     }
 
     render(){

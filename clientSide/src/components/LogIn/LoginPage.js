@@ -3,24 +3,13 @@ import LoginPanel from "./LoginPanel";
 
 class LoginPage extends Component{
 
-    constructor(props){
-        super(props);
-        this.state = {
-          loggedIn: false
-        };
-      }
-
-    componentDidMount(){
-        console.log("LoginPage mounted");     
-    }
-
     render(){
         return (
             <div className="container-fluid mt-5">
                 <div className="col-sm-12 col-md-6 offset-md-3" style={{"maxWidth": "750px !important"}}>
                     
                     <h2 className="w-100 text-center"> Mirësevini në </h2>
-                    <h2 className="w-100 text-center"> [Emri i faqes] </h2>
+                    <h2 className="w-100 text-center"> Communication Progress </h2>
 
                     <div className="col-sm-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
                         <LoginPanel></LoginPanel>                
@@ -29,7 +18,6 @@ class LoginPage extends Component{
             </div>
         )
     }
-
 }
 
 export default LoginPage;

@@ -14,6 +14,13 @@ export const REGISTER_FAIL = "REGISTER_FAIL";
 export const GET_ERRORS = "GET_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 
+export const REDIRECT_LOGIN = "REDIRECT_LOGIN";
+export const REDIRECT_HOME = "REDIRECT_HOME";
+export const REDIRECT_TICKET = "REDIRECT_TICKET";
+export const REDIRECT_COMPLETE = "REDIRECT_COMPLETE";
+
+
+
 
 
 

@@ -3,12 +3,14 @@
 import {combineReducers} from 'redux';
 import errorReducer from './errorReducer';
 import authReducer from './authReducer';
+import redirectReducer from './redirectReducer';
 
 
 
 export default combineReducers({ //as many as we want inside this
     error: errorReducer,
-    auth: authReducer
+    auth: authReducer,
+    redirect: redirectReducer,
 });
 
 

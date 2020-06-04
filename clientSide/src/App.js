@@ -4,41 +4,49 @@ import MainPage             from './components/MainPage/index';
 import ReduxStore           from './ReduxStore';
 import {Provider}           from 'react-redux';
 
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-
+import { loadUser } from './Redux/actions/authActions';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
+import LoadSpinner from './LoadSpinner';
 
 
-class App extends Component{
+// class App extends Component{
 
-  constructor(props){
-    super(props);
-    this.state = {
-    };
-  }
+//   render() {
+//     // this.isUserAuthenticated();
+//     return (
+     
+//     );
+//   }
+// }
 
-  render() {
-    return (
-      <Provider store={ReduxStore}>
-        <Router>
-          <Switch>
-            <Route exact path="/login" component={LoginPage} />
-            <Route path="/home" component={MainPage} />
-          </Switch>
-        </Router>
-      </Provider>
-    );
-  }
+function App(props) {
 
+  loadUser();
 
+  return (
+    <Provider store={ReduxStore}>
+      <Router>
+        <Switch>
+          <Route exact path="" render={ () => {
+            console.log(ReduxStore.getState().auth.isAuthenticated);
+          }}/>  
+          <Route exact path="/login" component={LoginPage}/>  
+          <Route path="/home" component={MainPage} />
+        </Switch>
+      </Router>
+    </Provider>
+  );
 }
 
+
+// export default connect( mapStateToProps, ReduxStore, { loadUser } )(App);
+export default App;
 
 
 // function App() {
@@ -83,5 +91,3 @@ class App extends Component{
 //     </Provider>
 //   );
 // }
-
-export default App;

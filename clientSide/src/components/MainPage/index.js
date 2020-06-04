@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import LoggedInInfo from '../SideComponent/LoggedInInfo';
 import MainMenu from '../SideComponent/MainMenu';
 import MessageNotifications from '../MessageNotifications';
-import {loadUser} from "../../actions/authActions";
+import {loadUser} from "../../Redux/actions/authActions";
 import NavBarr from './NavBar';
 import {connect } from 'react-redux';
 import PropTypes from 'prop-types';

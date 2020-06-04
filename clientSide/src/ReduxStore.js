@@ -3,7 +3,7 @@
 
 import {createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';      //bringing things together
-import rootReducer from './reducers'; //reducing all files into 1
+import rootReducer from './Redux/reducers'; //reducing all files into 1
 
 const initialState = {}; //empty initial state for our application
 

@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'reactstrap';
 import {connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {logoutUser, loadUser } from '../../actions/authActions';
+import {logoutUser, loadUser } from '../../Redux/actions/authActions';
 import ConfirmationModal from '../Modals/ConfirmationModal';
 
 
