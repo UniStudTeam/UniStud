@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import LoginPage            from './components/LogIn/LoginPage';
 import MainPage             from './components/MainPage/index';
 import ReduxStore           from './ReduxStore';
@@ -6,38 +6,55 @@ import {Provider}           from 'react-redux';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { loadUser } from './Redux/actions/authActions';
+
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
-import LoadSpinner from './LoadSpinner';
 
-
-// class App extends Component{
-
-//   render() {
-//     // this.isUserAuthenticated();
-//     return (
-     
-//     );
-//   }
-// }
 
 function App(props) {
 
-  loadUser();
+  function isUserAuthenticated(currPage){
+    
+    var loggedIn = false;
+    if( sessionStorage.getItem('session_token') && sessionStorage.getItem('session_isAuthenticated') ){
+      loggedIn = true;
+    }
+    console.log(loggedIn);
+    
+    if( currPage === "login" && loggedIn){
+      window.location = "/home";
+    }
+    else if( currPage === "login" && !loggedIn ){
+      return <LoginPage/>;
+    }
+
+    if( currPage === "home" && !loggedIn){
+      window.location = "/login";
+    }
+    else if( currPage === "home" && loggedIn){
+      return <MainPage/>;
+    }
+    
+    if (currPage === "ticket" && !loggedIn){
+      window.location = "/login";
+    }
+    else if (currPage === "ticket" && loggedIn){
+      return <MainPage/>;
+    }
+
+  }
 
   return (
     <Provider store={ReduxStore}>
       <Router>
         <Switch>
-          <Route exact path="" render={ () => {
-            console.log(ReduxStore.getState().auth.isAuthenticated);
-          }}/>  
-          <Route exact path="/login" component={LoginPage}/>  
-          <Route path="/home" component={MainPage} />
+          <Route exact path="/"  render={ () => {window.location = "/login";} }/>  
+          <Route exact path="/login" render={ () => isUserAuthenticated("login") }/>  
+          <Route path="/home" render={ () => isUserAuthenticated("home") }/>
+          <Route path="/ticket" render={ () => isUserAuthenticated("ticket") }/>
         </Switch>
       </Router>
     </Provider>
@@ -45,7 +62,7 @@ function App(props) {
 }
 
 
-// export default connect( mapStateToProps, ReduxStore, { loadUser } )(App);
+//export default connect( mapStateToProps, ReduxStore, { loadUser } )(App);
 export default App;
 
 

@@ -39,7 +39,7 @@ class ForgetCredentials extends Component{
     render(){
         return (
             <div>
-                <a href="#" className="form-text text-muted">
+                <a href="#vb" className="form-text text-muted">
                     <small id="resetPassword" onClick={this.editModal}>Keni harruar fjalëkalimin?</small>
                 </a>
                 <a  href="#" className="form-text text-muted">

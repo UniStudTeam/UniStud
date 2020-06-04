@@ -14,10 +14,10 @@ export const redirectUserTo = (where) => (dispatch, getState) => {
     console.log("Redirecting User");
     //User
 
-    if( where == "home"){
+    if( where === "home"){
         dispatch({type: REDIRECT_HOME}); //tell redirectReducer to use REDIRECT_HOME
     }
-    else if( where == "ticket"){
+    else if( where === "ticket"){
         dispatch({type: REDIRECT_TICKET}); //tell redirectReducer to use REDIRECT_HOME
     }
     else{

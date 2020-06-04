@@ -10,7 +10,7 @@ import {
 } from '../actions/types';
 
 const initialState = {
-    token: localStorage.getItem('token'),
+    token: sessionStorage.getItem('session_token'),
     isAuthenticated: false,
     isLoading: false,
     user: null
@@ -31,7 +31,9 @@ export default function(state=initialState, action){
                 user: action.payload
             };
         case LOGIN_SUCCESS:
-            localStorage.setItem('token', action.payload.token); //set token when logged in
+            sessionStorage.setItem('session_token', action.payload.token);
+            sessionStorage.setItem('session_isAuthenticated', true);
+            // localStorage.setItem('token', action.payload.token); //set token when logged in
             return{
                 ...state,
                 ...action.payload,
@@ -41,7 +43,8 @@ export default function(state=initialState, action){
         case AUTH_ERROR:
         case LOGIN_FAIL:
         case LOGOUT_SUCCESS:
-            localStorage.removeItem('token');
+            sessionStorage.removeItem('session_token');
+            sessionStorage.removeItem('session_isAuthenticated');
             return{
                 ...state,
                 isAuthenticated: false,

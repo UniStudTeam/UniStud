@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {returnErrors} from './errorActions';
-import {redirectUserTo} from '../actions/redirectActions'
 
 import {
     USER_LOADED,
@@ -9,7 +8,6 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
-    REDIRECT_LOGIN,
     // LOGIN_SUCCESS,
     // LOGIN_FAIL,
     // REGISTER_SUCCESS,
@@ -33,18 +31,13 @@ export const loadUser = () => (dispatch, getState) => {
                 type: USER_LOADED,
                 payload: response.data
             });
-            console.log("User is loaded successfully");
         })
         .catch(error => {
-
-            redirectUserTo("login");
-
             dispatch(returnErrors(error.response.data.title, error.response.data.body, error.response.status));
-
             dispatch({
                 type: AUTH_ERROR
             });
-
+            window.location = "/login";
         })
 }
 
@@ -70,10 +63,8 @@ export const loginUser = (user) => (dispatch, getState) => {
                 type: LOGIN_SUCCESS,
                 payload: response.data
             });
-            console.log("User logged in successfully");
         })
         .catch(error => {
-
             dispatch( //returnErrors(title, body, statys, id(optional)) return a format of: {type:___, payLoad: ___}
                 returnErrors(
                     error.response.data.title, 
@@ -81,7 +72,6 @@ export const loginUser = (user) => (dispatch, getState) => {
                     error.response.status
                 )
             );
-
             dispatch({
                 type: LOGIN_FAIL, 
             });
@@ -94,9 +84,9 @@ export const logoutUser = () => (dispatch) => {
     //we need to make token not valid too !!!!!importatnt
     dispatch({
         type: LOGOUT_SUCCESS
-    }).then(response => {
-        window.location = "/login";
     });
+
+    window.location = "/login";
 
 }
 

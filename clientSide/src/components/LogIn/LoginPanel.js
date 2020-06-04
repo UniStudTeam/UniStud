@@ -5,6 +5,7 @@ import {clearErrors} from '../../Redux/actions/errorActions';
 import PropTypes from 'prop-types';
 import {connect } from 'react-redux';
 import ForgetCredentials from './ForgetCredentials';
+import Modal from '../Modals/Modal';
 
 
 class LoginPanel extends Component{
@@ -22,6 +23,10 @@ class LoginPanel extends Component{
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
+    toggleModal(){
+       clearErrors();
+    }
+
     handleInputChange(e){
         this.setState({ [e.target.name] : e.target.value });
     }
@@ -30,6 +35,7 @@ class LoginPanel extends Component{
         e.preventDefault();
 
         console.log('Trying to log in now...');
+        console.log("[" + this.state.email + "][" + this.state.password + "]");
         this.props.loginUser({
             name : this.state.email,
             password: this.state.password
@@ -49,6 +55,12 @@ class LoginPanel extends Component{
             e.target.innerText = "Shiko";
         }
 
+    }
+
+    componentDidUpdate(){
+        if( sessionStorage.getItem("session_isAuthenticated") ){
+            window.location = "/home";
+        }
     }
 
     render(){
@@ -98,6 +110,8 @@ class LoginPanel extends Component{
                     </div>
                 </Form>
 
+                <Modal show={ (this.props.error.status != null) } handleClose={this.props.clearErrors} modalInfo={{title: this.props.error.title , body: this.props.error.body} } ></Modal>
+
             </Container>
         )
     }
@@ -118,7 +132,7 @@ const mapStateToProps = (state) => ({
     loginResponse: state.logIn, 
     isAuthenticated : state.auth.isAuthenticated,
     isLoading: state.auth.isLoading,
-    error: state.error.msg
+    error: state.error
 });
 
 

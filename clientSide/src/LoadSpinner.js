@@ -10,13 +10,9 @@ import {USER_LOADING} from './Redux/actions/types';
 
 class LoadSpinner extends React.Component {
 
-  componentWillMount(){
-    console.log("LoadSpinner will mount");
-    this.props.loadUser();
-  }
-
   //other logic
   render() {
+
      return(
         <Container className="text-center mt-5">
             <h5> Duke ngarkuar: </h5>

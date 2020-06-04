@@ -63,10 +63,10 @@ AuthRouter.post('/', (request, response) => {
 // use middleware here (auth)
 AuthRouter.get( "/user", auth, (request, response) => {
 
+    console.log("sssssss");
     User.findById(request.user.id)
         .select("-password")
         .then(user => response.json(user));
-
 });
 
 

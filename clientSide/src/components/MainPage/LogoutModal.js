@@ -32,21 +32,6 @@ class LogOutModal extends Component{
         console.log("Logging out");
         this.props.logoutUser();
     }
-
-    componentDidMount(){
-        this.props.loadUser();
-    }
-
-    componentDidUpdate(){
-        console.log("Asdsadbsdhafsd");
-        if( !this.props.isAuthenticated ){
-            window.location = "/login";
-            // this.toggleModal();
-        }
-        else{
-
-        }
-    }
  
     render() {
         return (
